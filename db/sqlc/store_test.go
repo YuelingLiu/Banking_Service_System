@@ -172,7 +172,6 @@ func TestTrasferDeadlock(t *testing.T) {
 		require.NoError(t,err)
 
 
-		
 
 		// check the final updated balances
 		updateAccount1 ,err := testQueries.GetAccount(context.Background(), account1.ID)
