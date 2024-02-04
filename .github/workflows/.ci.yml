@@ -30,11 +30,17 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21.6' # Use the exact Go version from your go.mod file
+          go-version: '1.21.6'
         id: go
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
+
+      - name: Install golang-migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.0/migrate.darwin-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/bin/
+          which migrate
 
       - name: Run migrations
         run: make migrateup
