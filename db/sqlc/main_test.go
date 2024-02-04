@@ -16,7 +16,7 @@ const (
 
 
 var testQueries *Queries
-var testStore *Store
+// var testStore *Store
 var testDB *sql.DB
 
 
@@ -27,8 +27,8 @@ func TestMain(m *testing.M) {
 	}
 	
 
-	// testQueries = New(conn)
-	testStore = NewStore(conn) // Use NewStore to create a *Store instance
+	 testQueries = New(conn)
+	//testStore = NewStore(conn) // Use NewStore to create a *Store instance
 
 	
 
