@@ -8,25 +8,29 @@ import (
 	_ "github.com/jackc/pgx/v5/pgxpool"
 )
 
-// store provides all functions to execute db queries amd trasactions
+// interface for mockgen
+type Store interface {
+	Querier 
+	TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
 
-
-type Store struct {
-	*Queries 
+	
+}
+// SQLStore provides all functions to execute SQLdb queries amd trasactions
+type SQLStore struct {
 	db *sql.DB
-
+	*Queries
 }
 
-func NewStore(db *sql.DB) *Store {
-	return &Store{
-		db:db,
-		Queries:New(db),
-	
+// NewStore creates a new store
+func NewStore(db *sql.DB) Store {
+	return &SQLStore{
+		db:      db,
+		Queries: New(db),
 	}
 }
 
 // execTx executes a function within a db trasaction 
-func (store * Store) execTx(ctx context.Context, fn func(*Queries) error) error {
+func (store * SQLStore) execTx(ctx context.Context, fn func(*Queries) error) error {
 	tx, err := store.db.BeginTx(ctx, nil)
 
 	if err != nil {
@@ -67,7 +71,7 @@ var txKey = struct {}{}
 
 // Transfeer performs a money transfrer from one account to the other
 // it creates a transfer record, add account entires, and update accounts'balance
-func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error){
+func (store *SQLStore) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error){
 	var result TransferTxResult 
 
 	err := store.execTx(ctx, func(q *Queries) error {
