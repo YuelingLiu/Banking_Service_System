@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"git/api"
 	db "git/db/sqlc"
-	"git/db/util"
+	"git/util"
 
 	"log"
 

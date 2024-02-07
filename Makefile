@@ -13,6 +13,17 @@ migrateup:
 migratedown:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/simple_bank?sslmode=disable" -verbose down
 
+
+execdb:
+	docker exec -it postgres14 psql -U root -d simple_bank
+
+sqlc:
+	sqlc generate
+
+cleandb:
+	docker exec -it postgres14 psql -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;" ${PSQL_URL}
+
+
 sqlc:
 	sqlc generate
 

@@ -48,8 +48,6 @@ func (server *Server) getAccount(ctx *gin.Context){
   // fmt.Println("ID Parameter Value:", ctx.Param("id"))
 
 	var req getAccountRequest
-
-
 	if err := ctx.ShouldBindUri(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return 

@@ -2,7 +2,7 @@ package db
 
 import (
 	"database/sql"
-	"git/db/util"
+	"git/util"
 	"log"
 	"os"
 	"testing"
